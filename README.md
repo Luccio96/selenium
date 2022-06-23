@@ -11,6 +11,9 @@ little python project aimed to get us rich
 - aggiorna chrome o verifica che sia alla versione 103
 - lancia da terminale o da vscode: python3 main.py
 
+
+PS: testato su mac m1
+
 Luca
 
 
