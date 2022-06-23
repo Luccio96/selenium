@@ -19,6 +19,8 @@ import pandas as pd
 #debug attivo
 dbg = 1
 op = webdriver.ChromeOptions()
+
+#qua gli dico di aprire chrome invisibile, se lo vuoi vedere commentalo
 op.add_argument('headless')
 
 
