@@ -1,3 +1,3 @@
 # selenium
 
-initial test
+little python project aimed to get us rich 🤑
