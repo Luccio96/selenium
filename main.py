@@ -72,15 +72,15 @@ df = df.append(temp_df)
 
 
 
-print(df)
+print(data_tuples)
 #qua avrei finito, sotto c'era la parte di inserimento nel db
-for ind in df.index:
-    item_desc = df['Items'][ind]
-    item_price = df['Prices'][ind]
-    item_discount = df['Discounts'][ind]
+#for ind in df.index:
+#    item_desc = df['Items'][ind]
+ #   item_price = df['Prices'][ind]
+  #  item_discount = df['Discounts'][ind]
 
-    if (dbg):
-        print('Iterating row: '+str(ind))
+   # if (dbg):
+    #    print('Iterating row: '+str(ind))
    # sql = "INSERT INTO items (Description, Price, Discount, Date) VALUES (%s, %s, %s,now())"
    # val = (item_desc,  item_price, item_discount)
     #mycursor.execute(sql, val)
