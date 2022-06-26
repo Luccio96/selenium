@@ -7,7 +7,8 @@ little python project aimed to get us rich
 🤑
 
 
-- clona la repository
+- clona la repository scaricando tutto come da foto:
+
 - usa vs code se possibile
 - installa i moduli richiesti:
   "pip3 install selenium" 
