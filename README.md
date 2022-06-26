@@ -8,7 +8,7 @@ little python project aimed to get us rich
 
 
 - clona la repository scaricando tutto come da foto:
-
+![This is an image](https://cpb-us-e1.wpmucdn.com/sites.northwestern.edu/dist/b/3044/files/2021/05/github.png)
 - usa vs code se possibile
 - installa i moduli richiesti:
   "pip3 install selenium" 
