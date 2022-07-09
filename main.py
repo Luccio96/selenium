@@ -30,18 +30,25 @@ driver = webdriver.Chrome('/Users/luca/Documents/Selenium/selenium/chromedriver'
 #driver.implicitly_wait(10)
 
 #dichiaro il sito da controllare
-url = 'https://www.unieuro.it/online/Computer-e-Tablet/Computer-Portatili/MacBook'
-if (dbg):
-    print('Opening url: '+url)
+url = 'https://www.unieuro.it/online/Computer-e-Tablet/Computer-Portatili'
+
+   
 driver.get(url)
 
 #aggiungo ad ogni array item,price,discount tutto ciò che nella pagina sopra è contenuto nel
 #relativo tag html
-
+counter = 0;
 i = 0;
 
-while (i < 10):
+
+total_result = driver.find_elements_by_xpath("//span[contains(@class, 'total-results')]")
+
+
+print('TOTALE: ' + str(total_result))
+while (counter < 4):
     #ad es. qui prendo tutti i prezzi contenuti nel tag <div> con classe "title product-tile__title"
+
+    
     items = driver.find_elements_by_xpath("//div[contains(@class, 'title product-tile__title')]")
     prices = driver.find_elements_by_xpath("//a[contains(@class, 'prices__price product-tile__price')]")
     discounts = driver.find_elements_by_xpath("//span[contains(@class, 'prices__percentage-value')]")
@@ -77,9 +84,11 @@ while (i < 10):
   
     page = driver.find_element_by_tag_name("html")
     page.send_keys(Keys.END)
-    time.sleep(10.5)
+    time.sleep(0.5)
+    counter = counter + 1
+    
 
-    print(df)
+print(df)
     
 
 
