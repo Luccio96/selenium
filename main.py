@@ -43,12 +43,16 @@ counter = 0;
 i = 0;
 
 
-
+total_items_list = []
 total_items =  driver.find_elements_by_xpath("//span[contains(@class, 'stats listing-header-section__stats')]")
 #exit(0)
 
 
-print(total_items)
+print(total_items[0])
+for i in range(len(total_items)):
+        total_items_list.append(total_items[i].text)
+        print(total_items_list)
+        print("test")
 
 while (True):
     #ad es. qui prendo tutti i prezzi contenuti nel tag <div> con classe "title product-tile__title"
