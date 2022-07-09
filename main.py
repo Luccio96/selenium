@@ -3,7 +3,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 #importo anche il database ma per il momemento non lo usiamo quindi commento un po di roba
-import mysql.connector
+#import mysql.connector
 import pandas as pd
 import time
 
