@@ -1,11 +1,13 @@
 
 #importa le librerie necessarie, attenzione prima vanno installate altrimenti da errore
+from numpy import true_divide
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 #importo anche il database ma per il momemento non lo usiamo quindi commento un po di roba
 #import mysql.connector
 import pandas as pd
 import time
+from sys import exit
 
 
 #mydb = mysql.connector.connect(
@@ -41,11 +43,14 @@ counter = 0;
 i = 0;
 
 
-total_result = driver.find_elements_by_xpath("//span[contains(@class, 'total-results')]")
+
+total_items =  driver.find_elements_by_xpath("//span[contains(@class, 'stats listing-header-section__stats')]")
+#exit(0)
 
 
-print('TOTALE: ' + str(total_result))
-while (counter < 4):
+print(total_items)
+
+while (True):
     #ad es. qui prendo tutti i prezzi contenuti nel tag <div> con classe "title product-tile__title"
 
     
@@ -87,6 +92,8 @@ while (counter < 4):
     time.sleep(0.5)
     counter = counter + 1
     
+    if (i >= 100):
+        break;
 
 print(df)
     
