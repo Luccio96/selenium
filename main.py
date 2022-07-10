@@ -54,6 +54,11 @@ for i in range(len(total_items)):
         print(total_items_list)
         print("test")
 
+a
+
+
+
+
 while (True):
     #ad es. qui prendo tutti i prezzi contenuti nel tag <div> con classe "title product-tile__title"
 
