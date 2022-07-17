@@ -1,6 +1,7 @@
 
 #importa le librerie necessarie, attenzione prima vanno installate altrimenti da errore
-from numpy import true_divide
+import telegram_send
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 #importo anche il database ma per il momemento non lo usiamo quindi commento un po di roba
@@ -81,6 +82,7 @@ for l in range(counter):
         item_list = []
         for i in range(len(items)):
             item_list.append(items[i].text)
+            #telegram_send.send(messages=[items[i].text])
 
         if (dbg):
             print('Obtained items'+str(len(item_list)))
