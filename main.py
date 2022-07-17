@@ -10,7 +10,7 @@ import pandas as pd
 import time
 from sys import exit
 
-
+DISCOUNT_ALERT = 40
 #mydb = mysql.connector.connect(
  # host="localhost",
   #user="luca",
@@ -44,18 +44,20 @@ driver.get(url)
 counter = 0;
 i = 0;
 
+
+#importante altrimenti non diamo tempo a caricare la pagina
 time.sleep(1)
 total_items =  driver.find_elements_by_xpath("//span[contains(@class, 'stats listing-header-section__stats')]")[0]
 counter = int(total_items.text.split(' ')[0])
 
 
-for l in range(counter):
- 
+#for l in range(counter):
+while(True): 
 
     #ad es. qui prendo tutti i prezzi contenuti nel tag <div> con classe "title product-tile__title"
 
     items = driver.find_elements_by_xpath("//div[contains(@class, 'title product-tile__title')]")
-
+    
     #scendo nella pagina per prendere i prezzi
     page = driver.find_element_by_tag_name("html")
     page.send_keys(Keys.END)
@@ -63,9 +65,9 @@ for l in range(counter):
     time.sleep(0.5)
 
 
-    l = l + len(items)
-    print('Valore di i: ' + str(len(items)))
-    #se il cliclo è terminato prendo i preziz
+    #l = l + len(items)
+    #print('Valore di i: ' + str(len(items)))
+    #se il cliclo è terminato prendo i prezzi
     if len(items) == counter:
         print('Cliclo terminato')
        
@@ -73,15 +75,18 @@ for l in range(counter):
        
         prices = driver.find_elements_by_xpath("//a[contains(@class, 'prices__price product-tile__price')]")
         discounts = driver.find_elements_by_xpath("//span[contains(@class, 'prices__percentage-value')]")
-
+        photos = driver.find_elements_by_xpath("//img[contains(@class, 'product-img product-tile__img lazyloaded')]")
 
         df = pd.DataFrame(columns=['Items','Prices','Discounts']) 
 
 
         #qua sotto semplicmente tutto ciò che trovo lo aggiungo all'array
         item_list = []
+        item_url = []
         for i in range(len(items)):
             item_list.append(items[i].text)
+            anchor = items[i].find_elements_by_tag_name("a")
+            item_url.append(anchor[0].get_attribute("href"))
             #telegram_send.send(messages=[items[i].text])
 
         if (dbg):
@@ -94,24 +99,46 @@ for l in range(counter):
             print('Obtained prices'+str(len(price_list)))
         discount_list = []
         for p in range(len(discounts)):
-            discount_list.append(discounts[p].text)
+            #tolgo il segno e % dalla stringa
+            discount = discounts[p].text[1:-1]
+            discount_list.append(discount)
             
         if (dbg):
             print('Obtained discounts'+str(len(discount_list)))
 
+        photo_list = []
+        for photo in photos:
+            photo_list.append(photo.get_attribute("src"))
+
         #qua metto in ordine l'array sotto la sua relativa colonna
-        data_tuples = list(zip(item_list[1:],price_list[1:],discount_list[1:])) 
-        temp_df = pd.DataFrame(data_tuples, columns=['Items','Prices','Discounts'])
+        data_tuples = list(zip(item_list[1:],price_list[1:],discount_list[1:],item_url[1:],photo_list[1:]))
+        temp_df = pd.DataFrame(data_tuples, columns=['Items','Prices','Discounts','URL','Photo'])
         df = df.append(temp_df)
     
+        #qui salvo il dataframe in un csv
+        df.to_csv('/Users/luca/Documents/Selenium/selenium/data.csv', index=False)
         break
-        #incremento il contatore
+       
        
     
     
     
 
-print(df)
+for ind in df.index:
+    item_desc = df['Items'][ind]
+    item_price = df['Prices'][ind]
+    item_discount = df['Discounts'][ind]
+    item_url = df['URL'][ind]
+    item_photo = df['Photo'][ind]
     
+    telegram_send.send(messages=[item_desc,item_price,item_url])
+    #se lo sconto è oltre x% lo invio al telegram
+    if int(item_discount) >= DISCOUNT_ALERT:
+        #telegram_send.send(messages=[item_desc,item_price,item_url])
 
+        #send telegram photo
+       
+
+
+        print('Inviato')
 
